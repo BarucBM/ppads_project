@@ -1,2 +1,1 @@
-# Prática profissional de Análise e Desenvolvimento de
-Sistemas
+# Prática profissional de Análise e Desenvolvimento de Sistemas
