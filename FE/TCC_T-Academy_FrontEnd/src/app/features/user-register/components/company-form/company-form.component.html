@@ -24,9 +24,6 @@
       </p-floatLabel>
       <app-form-error [control]="companyForm.get('company.duns')!" />
     </div>
-    <div class="mt-5">
-      <app-address-form (addressFormReady)="onAddressFormReady($event)"></app-address-form>
-    </div>
   </div>
 
   <div formGroupName="user" class="mb-6">

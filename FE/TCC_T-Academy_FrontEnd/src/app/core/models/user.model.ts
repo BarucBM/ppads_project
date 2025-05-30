@@ -10,7 +10,6 @@ export interface User {
   id?: string
   email: string
   password?: string
-  hasGoogleAuth?: boolean
   role?: UserRole
   image?: any
 }
@@ -20,5 +19,4 @@ export interface UserProfile {
   email: string,
   image?: any
   role?: UserRole,
-  address?: Address
 }

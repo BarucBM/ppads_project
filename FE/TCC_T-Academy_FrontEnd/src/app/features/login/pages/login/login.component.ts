@@ -14,7 +14,7 @@ import { SocialUser } from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, CustomFormsModule, GoogleAuthComponent, InputGroupModule, InputGroupAddonModule, DividerModule],
+  imports: [RouterLink, CustomFormsModule, InputGroupModule, InputGroupAddonModule, DividerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

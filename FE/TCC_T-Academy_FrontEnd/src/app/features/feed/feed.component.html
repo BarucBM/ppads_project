@@ -1,37 +1,72 @@
-<!-- gamer-social-feed.component.html -->
-<div class="bg-gray-100 min-h-screen p-4">
-  <div class="bg-white rounded-2xl shadow-md overflow-hidden">
-    <div class="divide-y divide-gray-200">
-      <div *ngFor="let game of games" class="bg-[#1E293B] text-white pb-4">
-        <img [src]="game.image" alt="game image" class="w-full h-40 object-cover">
-        <div class="px-4 pt-2">
-          <h3 class="text-lg font-bold">{{ game.title }}</h3>
-          <p class="text-sm text-gray-300">{{ game.ratings }} ratings</p>
-          <div class="flex gap-1 pt-1">
-            <i *ngFor="let _ of [1,2,3,4,5]" class="pi pi-star text-gray-500"></i>
-          </div>
-        </div>
-      </div>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="title">Home</div>
+    <div class="icons">
+      <i class="fas fa-bell"></i>
+      <i class="fas fa-envelope"></i>
+    </div>
+  </div>
 
-      <!-- Footer -->
-      <div class="bg-[#1E293B] text-white flex items-center p-4">
-        <img src="https://i.pravatar.cc/40" class="rounded-full w-[5rem] h-[5rem]" alt="avatar">
-        <div class="ml-2">
-          <p class="text-sm font-semibold">2gamer123</p>
-          <p class="text-xs text-gray-300">see description</p>
-        </div>
+  <!-- Stories -->
+  <div class="stories">
+    <button class="add-button">+</button>
+    <div class="story-list">
+      <div class="story" *ngFor="let story of stories">
+        <img [src]="story" alt="story" />
       </div>
     </div>
+  </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bg-white border-t rounded-b-2xl flex justify-around items-center py-2">
-      <i class="pi pi-home text-xl text-gray-600"></i>
-      <i class="pi pi-bars text-xl text-gray-600"></i>
-      <button class="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center -mt-6 shadow-md">
-        <i class="pi pi-plus text-xl"></i>
-      </button>
-      <i class="pi pi-bell text-xl text-gray-600"></i>
-      <i class="pi pi-user text-xl text-gray-600"></i>
+  <!-- Posts -->
+<div class="posts">
+  <div class="post" *ngFor="let post of posts; let i = index">
+    <div class="post-header">
+      <img [src]="post.avatar" class="avatar" alt="Avatar" />
+      <span class="post-name">{{ post.name }}</span>
+    </div>
+    <img [src]="post.image" class="post-image" alt="Post image" />
+    <p class="post-description">
+      <strong>{{ post.name }}</strong> {{ post.description }}
+    </p>
+    <div class="post-actions">
+      <i
+        class="fas fa-heart"
+        [class.liked]="post.liked"
+        (click)="toggleLike(post)"
+        title="Curtir"
+      >♡</i>
+    </div>
+        <div class="comments-section">
+      <div class="comments-list">
+        <div class="comment" *ngFor="let comment of post.comments">
+          <span>{{ comment }}</span>
+        </div>
+      </div>
+      <div class="add-comment">
+        <input
+          type="text"
+          [(ngModel)]="newComments[i]"
+          placeholder="Adicionar comentário..."
+        />
+        <button (click)="addComment(i)">Comentar</button>
+      </div>
     </div>
   </div>
 </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <i class="fas fa-home"></i>
+    <i class="fas fa-layer-group"></i>
+    <button class="add-button center" (click)="openModal()">+</button>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-user"></i>
+  </div>
+</div>
+
+<app-new-post-modal
+  *ngIf="showModal"
+  (postCreated)="addNewPost($event)"
+  (closed)="closeModal()"
+></app-new-post-modal>

@@ -21,7 +21,6 @@ export class AuthService {
   private url: string = "http://localhost:8080/auth";
   private authTokenKey: string = "auth-token";
   private refreshTokenKey: string = "refresh-token";
-  private urlGoogleAuth: string = "https://accounts.google.com/o/oauth2/v2/auth";
   private redirectUri = 'http://localhost:4200/home';
   private scope = 'https://www.googleapis.com/auth/calendar';
   private includeGrantedScopes = 'true';
@@ -44,7 +43,6 @@ export class AuthService {
         next: (user) => {
           this.userProfile.name = user.name;
           this.userProfile.email = user.email;
-          this.userProfile.address = user.address;
           this.userProfile.role = user.role;
 
           if (user.image) {
@@ -57,6 +55,7 @@ export class AuthService {
   }
 
   createUserCustomer(userCustomerData: NewCustomer): Observable<Customer> {
+    console.log(userCustomerData)
     return this.httpClient.post<Customer>(`${this.url}/register/customer`, userCustomerData);
   }
 
@@ -132,8 +131,7 @@ export class AuthService {
   }
 
   authenticate() {
-    const authUrl = `${this.urlGoogleAuth}?scope=${this.scope}&include_granted_scopes=${this.includeGrantedScopes}&response_type=token&state=${this.state}&redirect_uri=${this.redirectUri}&client_id=${environment.googleLoginClientId}`;
-    window.location.href = authUrl;
+
   }
 
   getAccessToken() {

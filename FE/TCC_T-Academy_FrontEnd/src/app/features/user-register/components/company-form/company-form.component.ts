@@ -13,7 +13,7 @@ import { NewCompany } from '../../../../core/models/company.model';
 @Component({
   selector: 'app-company-form',
   standalone: true,
-  imports: [CustomFormsModule, PasswordModule, DividerModule, AddressFormComponent],
+  imports: [CustomFormsModule, PasswordModule, DividerModule],
   templateUrl: './company-form.component.html',
   styleUrl: './company-form.component.scss'
 })

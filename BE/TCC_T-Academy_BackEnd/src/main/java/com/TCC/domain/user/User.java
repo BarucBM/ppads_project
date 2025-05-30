@@ -1,7 +1,5 @@
 package com.TCC.domain.user;
 
-import com.TCC.domain.image.Image;
-import com.TCC.domain.notification.Notification;
 import com.TCC.domain.preferences.Preference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -30,17 +28,12 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-
     private String email;
-
-    private Boolean hasGoogleAuth;
 
     private String password;
 
     private UserRole role;
 
-    @ManyToOne
-    private Image image;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -60,11 +53,10 @@ public class User implements UserDetails {
     // @OneToMany
     // private UserNotification userNotification;
 
-    public User(String email, String password, UserRole role, Boolean hasGoogleAuth) {
+    public User(String email, String password, UserRole role) {
         this.email = email;
         this.role = role;
         this.password = password;
-        this.hasGoogleAuth = hasGoogleAuth;
     }
 
     @Override

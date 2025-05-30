@@ -16,13 +16,11 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final UserService userService;
     private final PreferenceService preferenceService;
-    private final AddressService addressService;
 
-    public CustomerService(CustomerRepository customerRepository, UserService userService, AddressService addressService, PreferenceService preferenceService) {
+    public CustomerService(CustomerRepository customerRepository, UserService userService, PreferenceService preferenceService) {
         this.customerRepository = customerRepository;
         this.userService = userService;
         this.preferenceService = preferenceService;
-        this.addressService = addressService;
     }
 
     public Customer findCustomerById(String id) {
@@ -45,7 +43,6 @@ public class CustomerService {
 
         customer.setUser(userService.createUser(user));
 
-        customer.setAddress(addressService.createAddress(data.customer().address()));
         preferenceService.newUserPreferences(customer.getUser().getId());
 
         return customerRepository.save(customer);
@@ -57,8 +54,6 @@ public class CustomerService {
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with ID: " + id));
 
         BeanUtils.copyProperties(customerDTO, existingCustomer);
-
-        existingCustomer.setAddress(addressService.updateAddress(existingCustomer.getAddress().getId(), customerDTO.address()));
 
         customerRepository.save(existingCustomer);
     }

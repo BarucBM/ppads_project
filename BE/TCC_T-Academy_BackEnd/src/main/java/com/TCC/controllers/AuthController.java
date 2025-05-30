@@ -71,17 +71,6 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/google-login")
-    public ResponseEntity<Object> googleLogin(@RequestBody String email) {
-        User user = userService.findUserByEmail(email);
-
-        if (user != null && user.getHasGoogleAuth()) {
-            return ResponseEntity.ok(tokenService.generateToken(user));
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
     @PostMapping("refresh-token")
     public ResponseEntity<TokenResponseDTO> refreshToken(@RequestBody TokenRequestDTO requestDTO) {
         return ResponseEntity.ok(tokenService.generateRefreshToken(requestDTO.refreshToken()));

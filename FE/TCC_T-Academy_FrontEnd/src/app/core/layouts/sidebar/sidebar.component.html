@@ -1,10 +1,9 @@
-<aside class="sidebar w-15rem h-full p-5 flex flex-column flex-shrink-0 overflow-y-auto overflow-x-hidden">
+<aside class="sidebar w-15rem h-full p-5 flex flex-column flex-shrink-0 overflow-y-auto overflow-x-hidden color">
   <span class="logo">
     <img src="assets/images/logo-icon.png" alt="Logo" width="40">
   </span>
   <a class="logo-expand" routerLink="home">
-    <img src="assets/images/logo.png" alt="Breeze" width="170" class="show-light">
-    <img src="assets/images/logo-white.png" alt="Breeze" width="170" class="show-dark">
+    <img src="assets/images/logo.png" alt="Breeze" width="170" class="">
   </a>
   <div class="side-wrapper">
     <div class="side-title uppercase">{{ 'navbar.navigateLabel' | translate }}</div>
@@ -13,7 +12,7 @@
         <i class="material-symbols-rounded">home</i>
         {{ 'navbar.home' | translate }}
       </a>
-      <a class="sidebar-link trending" routerLink="events" routerLinkActive="is-active">
+      <a class="sidebar-link trending" routerLink="explore" routerLinkActive="is-active">
         <i class="material-symbols-rounded">manage_search</i>
         {{ 'navbar.discover' | translate }}
       </a>
@@ -21,9 +20,9 @@
         <i class="material-symbols-rounded">calendar_month</i>
         {{ 'navbar.manageEvents' | translate }}
       </a>
-      <a *appHasPermission="'CUSTOMER'" class="sidebar-link" routerLink="customer-events" routerLinkActive="is-active">
+      <a *appHasPermission="'CUSTOMER'" class="sidebar-link" routerLink="Friends" routerLinkActive="is-active">
         <i class="material-symbols-rounded">calendar_month</i>
-        {{ 'navbar.events' | translate }}
+        Meus amigos
       </a>
       <a *appHasPermission="'CUSTOMER'" class="sidebar-link" routerLink="cart" routerLinkActive="is-active">
         <i class="material-symbols-rounded">shopping_cart</i>

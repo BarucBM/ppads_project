@@ -2,7 +2,6 @@ package com.TCC.services;
 
 import com.TCC.domain.company.Company;
 import com.TCC.domain.customer.Customer;
-import com.TCC.domain.image.Image;
 import com.TCC.domain.user.User;
 import com.TCC.domain.user.UserProfileDTO;
 import com.TCC.repositories.CompanyRepository;
@@ -19,13 +18,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
     private final CompanyRepository companyRepository;
-    private final ImageService imageService;
 
-    public UserService(UserRepository userRepository, CustomerRepository customerRepository, CompanyRepository companyRepository, ImageService imageService) {
+    public UserService(UserRepository userRepository, CustomerRepository customerRepository, CompanyRepository companyRepository ) {
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.companyRepository = companyRepository;
-        this.imageService = imageService;
     }
 
     public User findUserById(String id) {
@@ -42,24 +39,16 @@ public class UserService {
         Customer customer = customerRepository.findByUserId(user.getId());
 
         if (customer != null) {
-            return new UserProfileDTO(user.getEmail(), customer.getName(), user.getImage(), user.getRole(), customer.getAddress());
+            return new UserProfileDTO(user.getEmail(), customer.getName(), user.getRole());
         } else {
             Company company = companyRepository.findByUserId(user.getId());
-            return new UserProfileDTO(user.getEmail(), company.getName(), user.getImage(), user.getRole(), company.getAddress());
+            return new UserProfileDTO(user.getEmail(), company.getName(), user.getRole());
         }
     }
 
     public void uploadPhoto(String userId, MultipartFile file) {
         User user = this.findUserById(userId);
 
-        Image image = user.getImage();
-
-        if (image != null) {
-            user.setImage(null);
-            imageService.deleteImage(image);
-        }
-
-        user.setImage(imageService.uploadImage(file));
 
         userRepository.save(user);
     }
@@ -67,12 +56,6 @@ public class UserService {
     public void removePhoto(String userId) {
         User user = this.findUserById(userId);
 
-        Image image = user.getImage();
-
-        if (image != null) {
-            user.setImage(null);
-            imageService.deleteImage(image);
-        }
 
         userRepository.save(user);
     }
@@ -85,6 +68,6 @@ public class UserService {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
 
-        return userRepository.save(new User(user.getEmail(), encryptedPassword, user.getRole(), user.getHasGoogleAuth()));
+        return userRepository.save(new User(user.getEmail(), encryptedPassword, user.getRole()));
     }
 }

@@ -1,29 +1,42 @@
-<form (ngSubmit)="handleSubmit()">
-  <h2 class="text-lg mb-5">{{ 'register.customer.title' | translate }}</h2>
-  <div class="mb-6 flex flex-column align-items-center gap-3">
-    <app-google-auth (userData)="getUserData($event)" [btnText]="'continue_with'"></app-google-auth>
-    <div class="flex align-items-center gap-3 mt-3" *ngIf="userGoogleData">
-      <p-avatar image="{{userGoogleData.photoUrl}}" shape="circle" size="large" />
-      <div>
-        <div class="font-semibold">{{ userGoogleData.name }}</div>
-        <div class="text-xs mb-1">{{ userGoogleData.email }}</div>
-        <span class="text-xs text-green-400">{{ 'register.customer.connected' | translate }}</span>
+<form (ngSubmit)="handleSubmit()" [formGroup]="UserForm">
+  <div formGroupName="user" class="mb-6">
+    <h2 class="text-lg mb-5">{{ 'forms.user.label' | translate }}</h2>
+    <div class="mt-4">
+      <p-floatLabel>
+        <input type="text" pInputText formControlName="email" class="w-full" />
+        <label for="email">{{ 'forms.user.email' | translate}}</label>
+      </p-floatLabel>
+      <app-form-error [control]="UserForm.get('user.email')!" />
+    </div>
+    <div class="mt-4">
+      <p-floatLabel>
+        <p-password formControlName="password" [toggleMask]="true" autocomplete="on" [promptLabel]="'forms.passwordValidator.label' | translate" [weakLabel]="'forms.passwordValidator.status.weak' | translate" [mediumLabel]="'forms.passwordValidator.status.medium' | translate" [strongLabel]="'forms.passwordValidator.status.strong' | translate">
+          <ng-template pTemplate="footer">
+            <p-divider></p-divider>
+            <p class="mt-2">{{ "forms.passwordValidator.suggestions" | translate }}</p>
+            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+              <li>{{ "forms.passwordValidator.tips.lowercase" | translate }}</li>
+              <li>{{ "forms.passwordValidator.tips.uppercase" | translate }}</li>
+              <li>{{ "forms.passwordValidator.tips.numeric" | translate }}</li>
+              <li>{{ "forms.passwordValidator.tips.minimum" | translate }}</li>
+            </ul>
+          </ng-template>
+        </p-password>
+        <label for="password">{{ 'forms.user.password' | translate}}</label>
+      </p-floatLabel>
+      <app-form-error [control]="UserForm.get('user.password')!" />
+    </div>
+    <div class="mt-4">
+      <p-floatLabel>
+        <p-password formControlName="confirmPassword" autocomplete="on" [toggleMask]="true" [feedback]="false"></p-password>
+        <label>{{ 'forms.user.confirmPassword' | translate}}</label>
+      </p-floatLabel>
+      <div class="form-error" *ngIf="showPasswordError">
+        {{ 'forms.user.passwordDontMatch' | translate}}
       </div>
     </div>
-    <span *ngIf="showUserError" class="form-error">{{ 'register.customer.googleInfo' | translate }}</span>
   </div>
-  <div class="mb-4">
-    <h2 class="text-lg mb-5">{{ 'register.customer.additionalInformations' | translate }}</h2>
-    <div class="grid">
-      <div class="col-12 mb-4">
-        <p-floatLabel>
-          <input type="text" pInputText [(ngModel)]="customerData.customer.phone" name="phone" class="w-full" />
-          <label for="phone">{{ 'forms.customer.phone' | translate}}</label>
-        </p-floatLabel>
-      </div>
-    </div>
-    <app-address-form (addressFormReady)="onAddressFormReady($event)"></app-address-form>
-  </div>
+  
   <div class="my-3">
     <p-button label="{{'buttons.register' | translate}}" type="submit" severity="primary" styleClass="w-full" />
   </div>

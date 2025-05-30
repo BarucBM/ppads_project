@@ -21,13 +21,11 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final UserService userService;
     private final PreferenceService preferenceService;
-    private final AddressService addressService;
 
-    public CompanyService(CompanyRepository companyRepository, UserService userService, AddressService addressService , PreferenceService preferenceService) {
+    public CompanyService(CompanyRepository companyRepository, UserService userService, PreferenceService preferenceService) {
         this.companyRepository = companyRepository;
         this.userService = userService;
         this.preferenceService = preferenceService;
-        this.addressService = addressService;
     }
 
     public List<Company> getAllCompanies(String name, String address, String phone, String email) {
@@ -54,13 +52,11 @@ public class CompanyService {
         User user = new User();
         BeanUtils.copyProperties(data.user(), user);
         user.setRole(UserRole.COMPANY);
-        user.setHasGoogleAuth(false);
 
         Company company = new Company();
         BeanUtils.copyProperties(data.company(), company);
 
         company.setUser(userService.createUser(user));
-        company.setAddress(addressService.createAddress(data.company().address()));
         preferenceService.newUserPreferences(company.getUser().getId());
         return companyRepository.save(company);
     }
@@ -71,8 +67,6 @@ public class CompanyService {
                 .orElseThrow(() -> new EntityNotFoundException("Company not found with ID: " + id));
 
         BeanUtils.copyProperties(companyDTO, existingCompany);
-
-        existingCompany.setAddress(addressService.updateAddress(existingCompany.getAddress().getId(), companyDTO.address()));
 
         companyRepository.save(existingCompany);
     }

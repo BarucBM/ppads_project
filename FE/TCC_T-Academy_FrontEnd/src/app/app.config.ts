@@ -1,7 +1,6 @@
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -45,8 +44,6 @@ export const appConfig: ApplicationConfig = {
         autoLogin: false,
         providers: [
           {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.googleLoginClientId)
           }
         ],
         onError: (error) => {

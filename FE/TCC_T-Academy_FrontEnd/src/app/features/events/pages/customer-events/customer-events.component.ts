@@ -19,7 +19,6 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CustomerEventComponent } from '../../components/customer-event/customer-event.component';
 import { AuthService } from '../../../../core/auth/services/auth.service';
-import { UserCalendarComponent } from '../../components/user-calendar/user-calendar.component';
 
 @Component({
   selector: 'app-customer-events',
@@ -27,7 +26,6 @@ import { UserCalendarComponent } from '../../components/user-calendar/user-calen
   imports: [
     SharedModule,
     TabViewModule,
-    EventComponent,
     CardModule,
     ButtonModule,
     DataViewModule,
@@ -36,8 +34,7 @@ import { UserCalendarComponent } from '../../components/user-calendar/user-calen
     RatingModule,
     RouterLink,
     FormsModule,
-    CustomerEventComponent,
-    UserCalendarComponent
+    CustomerEventComponent
   ],
   templateUrl: './customer-events.component.html',
   styleUrl: './customer-events.component.scss',
